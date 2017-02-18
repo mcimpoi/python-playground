@@ -5,6 +5,7 @@ import fibonacci
 
 PY_LOG_NAME = 'log_python.cprofile'
 CY_LOG_NAME = 'log_cython.cprofile'
+CY_LOG_NAME2 = 'log_cython2.cprofile'
 
 MOD_LARGE_NUM = 1e9 + 7
 FIB_IDX = 9000000
@@ -12,7 +13,7 @@ FIB_IDX = 9000000
 
 def sanity_check():
     for ii in range(100):
-        assert(fibonacci.fib(ii) == pyfib(ii))
+        print fibonacci.fib_types(ii), fibonacci.fib(ii)
 
 
 def pyfib(n):
@@ -28,13 +29,19 @@ def cython():
     print(fibonacci.fib(FIB_IDX))
 
 
+def cython2():
+    print(fibonacci.fib_types(FIB_IDX))
+
+
 def python():
     print(pyfib(FIB_IDX))
 
 
 if __name__ == '__main__':
+    sanity_check()
     cProfile.run('python()', filename=PY_LOG_NAME)
     cProfile.run('cython()', filename=CY_LOG_NAME)
+    cProfile.run('cython2()', filename=CY_LOG_NAME2)
 
     print('\n{}\n{}\n{}\n'.format('=' * 10, 'python', '=' * 10))
     py_stats = pstats.Stats(PY_LOG_NAME)
@@ -43,3 +50,7 @@ if __name__ == '__main__':
     print('\n{}\n{}\n{}\n'.format('=' * 10, 'cython', '=' * 10))
     cy_stats = pstats.Stats(CY_LOG_NAME)
     cy_stats.print_stats()
+
+    print('\n{}\n{}\n{}\n'.format('=' * 10, 'cython2', '=' * 10))
+    cy_stats2 = pstats.Stats(CY_LOG_NAME2)
+    cy_stats2.print_stats()

@@ -1,4 +1,5 @@
-MOD_LARGE_NUM = 1e9 + 7
+# MOD_LARGE_NUM = 1e9 + 7
+MOD_LARGE_NUM = 1000000007
 
 def fib(n):
     a, b = 0, 1
